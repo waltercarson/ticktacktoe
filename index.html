@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+</head>
+<body>
+    <h1 style="display: flex; justify-content: center;">Rock, Paper, or Scissors Game</h1>
+    <div>
+        <p style="display: flex; justify-content: center; font-size: 24px;">Rock, Paper, or Scissors?</p>
+        <div style="display: flex; justify-content: center;">
+        <input id="textbox" type="text">
+        </div>
+        <div style="display: flex; justify-content: center; padding-top: 4px;">
+            <button id="submit">Submit</button>
+        </div>
+    </div>
+    <script>
+
+        let humanScore = 0;
+        let computerScore = 0;
+
+       function getComputerChoice() {
+        const randomNumber = Math.floor(Math.random() * 3); // 0, 1, or 2 (5/29)
+
+        if (randomNumber === 0) {
+            return "rock";
+        } else if (randomNumber === 1) {
+            return "paper";
+        } else {
+            return "scissors";
+        }
+        }
+
+        function getHumanChoice() { // declared function and takeing parameters of... user prompt input
+            let choice = prompt("Choose 'Rock', 'Paper', or 'Scissors':"); // asked google how to 
+            return choice.toLowerCase(); // (5/29) to drop all letters to lowercase
+            }
+        
+        function playGame() { // moved everything under so it runs playRound in a while loop, after 5 games, announce winner.
+             humanScore = 0;
+             computerScore = 0;
+
+            // This function is defined inside playGame and used each round
+            function playRound(humanChoice, computerChoice) { // --------------------------------(5/29)
+                if ( 
+                    (computerChoice === "rock" && humanChoice === "scissors") ||
+                    (computerChoice === "scissors" && humanChoice === "paper") ||
+                    (computerChoice === "paper" && humanChoice === "rock") 
+                    )
+                    { 
+                        return "Computer Won";
+                } else if (
+                    (computerChoice === "scissors" && humanChoice === "rock") ||
+                    (computerChoice === "paper" && humanChoice === "scissors") ||
+                    (computerChoice === "rock" && humanChoice === "paper") 
+                    )
+                    {
+                    return "You Won";
+                } else if (computerChoice === humanChoice) 
+                { // -----------------------(5/29)
+                    return "It's a tie"
+                }
+                }
+
+            // game loop
+            while (computerScore < 5 && humanScore < 5) {
+                const humanChoice = getHumanChoice();
+                const computerChoice = getComputerChoice();
+
+                const result = playRound(humanChoice, computerChoice);
+
+                console.log(`You chose ${humanChoice}.`);
+                console.log(`computer chose ${computerChoice}.`);
+                console.log(`Result: ${result}`);
+
+                if (result === "Computer Won") {
+                    computerScore++;
+                } else if (result === "You Won") {
+                    humanScore++;
+                }
+
+                console.log(`Score: You ${humanScore} - Computer ${computerScore}`);
+            }
+
+            // after the loop ends FINAL RESULT
+            if (humanScore === 5) {
+                console.log("🎉 You won the game!");
+            } else {
+                console.log("💻 Computer won the game!");
+            }
+        }
+    
+    </script>
+</body>
+</html>
